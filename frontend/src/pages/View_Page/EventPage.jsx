@@ -24,11 +24,12 @@ function EventPage() {
 
     // ✅ Fetch Event Details
     axios
-      .get(`${API_BASE_URL}/events/getById/${eventId}`, {
+      .get(`${API_BASE_URL}/events/viewevents`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        setDetails(response.data);
+        const found = (response.data || []).find((e)=> String(e.id)===String(eventId));
+        if (found) setDetails(found);
         console.log(response.data);
       })
       .catch((error) => {

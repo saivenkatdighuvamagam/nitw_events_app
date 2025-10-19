@@ -11,7 +11,7 @@ const usePost = (endpoint, token,payload,params={}) => {
     setLoading(true);
 
     axios
-      .post(`http://localhost:8080/${endpoint}`, payload, {
+      .post(`${API_BASE_URL}/${endpoint}`, payload, {
         headers: { Authorization: `Bearer ${token}` },
         params: params, 
       })

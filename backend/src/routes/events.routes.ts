@@ -1,0 +1,41 @@
+import { Router } from 'express';
+import { body, param } from 'express-validator';
+import multer from 'multer';
+import { authenticateJwt, authorizeRoles } from '@middleware/auth';
+import { createEvent, deleteEvent, updateEvent, viewEvents, ongoingEvents } from '@controllers/events.controller';
+
+const router = Router();
+const upload = multer();
+
+router.get('/viewevents', authenticateJwt, viewEvents);
+router.get('/ongoingevents', authenticateJwt, ongoingEvents);
+
+router.post('/event',
+  authenticateJwt,
+  authorizeRoles('ADMIN', 'CLUB_SEC'),
+  upload.single('image'),
+  body('title').isString().notEmpty(),
+  body('description').isString().notEmpty(),
+  body('date').isString().notEmpty(),
+  body('time').isString().notEmpty(),
+  body('venue').isString().notEmpty(),
+  body('club').isString().notEmpty(),
+  createEvent
+);
+
+router.put('/event/:id',
+  authenticateJwt,
+  authorizeRoles('ADMIN', 'CLUB_SEC'),
+  upload.single('image'),
+  param('id').isMongoId(),
+  updateEvent
+);
+
+router.delete('/event/:id',
+  authenticateJwt,
+  authorizeRoles('ADMIN', 'CLUB_SEC'),
+  param('id').isMongoId(),
+  deleteEvent
+);
+
+export default router;

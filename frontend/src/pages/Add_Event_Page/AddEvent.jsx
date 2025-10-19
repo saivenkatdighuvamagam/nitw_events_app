@@ -83,7 +83,7 @@ function Form() {
 
     // Post request with axios
     axios
-      .post(`${API_BASE_URL}/events/addevents`, formData, {
+      .post(`${API_BASE_URL}/events/event`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`, // Authorization header
@@ -92,7 +92,7 @@ function Form() {
       .then((response) => {
         alert("Event added successfully!");
         console.log(response.data);
-        navigate("/"); // Redirect to events page
+      navigate("/viewevents"); // Redirect to events page
       })
       .catch((error) => {
         console.error("Error adding event:", error);
