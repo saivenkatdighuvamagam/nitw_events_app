@@ -13,6 +13,7 @@ import eventRoutes from '@routes/events.routes';
 import recruitmentRoutes from '@routes/recruitments.routes';
 import templateRoutes from '@routes/templates.routes';
 import adminRoutes from '@routes/admin.routes';
+import profileRoutes from '@routes/profile.routes';
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use('/events', eventRoutes);
 app.use('/recruitments', recruitmentRoutes);
 app.use('/templates', templateRoutes);
 app.use('/admin', adminRoutes);
+app.use('/profile', profileRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);

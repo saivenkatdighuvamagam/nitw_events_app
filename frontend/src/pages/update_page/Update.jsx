@@ -65,11 +65,11 @@ function Update() {
     const token = localStorage.getItem("authToken");
     console.log(token);
     axios
-      .get(`${API_BASE_URL}/events/getEvent/${id}`, {
+      .get(`${API_BASE_URL}/events/viewevents`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        const event = response.data;
+        const event = (response.data || []).find((e)=> String(e.id)===String(id)) || {};
         console.log(event.description);
         setDetails({
           title: event.title || "",
@@ -101,7 +101,7 @@ function Update() {
     const token = localStorage.getItem("authToken");
 
     axios
-      .put(`${API_BASE_URL}/events/updateEvent/${id}`, details, {
+      .put(`${API_BASE_URL}/events/event/${id}`, details, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((resp) => {

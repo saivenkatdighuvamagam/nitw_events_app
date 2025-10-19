@@ -13,6 +13,8 @@ export interface EventDocument extends Document {
   likes?: number;
   saves?: number;
   leaderboard?: Array<{ userId: mongoose.Types.ObjectId; score: number }>;
+  category?: string;
+  comments?: Array<{ id: mongoose.Types.ObjectId; userId: mongoose.Types.ObjectId; username: string; msg: string }>;
 }
 
 const eventSchema = new Schema<EventDocument>(
@@ -28,6 +30,15 @@ const eventSchema = new Schema<EventDocument>(
     image: { type: Buffer },
     likes: { type: Number, default: 0 },
     saves: { type: Number, default: 0 },
+    category: { type: String },
+    comments: [
+      {
+        id: { type: Schema.Types.ObjectId, auto: true },
+        userId: { type: Schema.Types.ObjectId, ref: 'User' },
+        username: { type: String },
+        msg: { type: String, required: true },
+      },
+    ],
     leaderboard: [
       {
         userId: { type: Schema.Types.ObjectId, ref: 'User' },

@@ -1,0 +1,32 @@
+import { Router } from 'express';
+import { authenticateJwt } from '@middleware/auth';
+import {
+  addFavourite,
+  getAllSavedEvents,
+  getComments,
+  getFavouritesByUser,
+  isLiked,
+  isSaved,
+  postComment,
+  removeFavourite,
+  saveEvent,
+  unsaveEvent,
+} from '@controllers/profile.controller';
+
+const router = Router();
+
+router.get('/isliked/:id', authenticateJwt, isLiked);
+router.post('/favourites/:id', authenticateJwt, addFavourite);
+router.delete('/favourites/:id', authenticateJwt, removeFavourite);
+
+router.get('/saved-events/issaved', authenticateJwt, isSaved);
+router.post('/saved-events/:id', authenticateJwt, saveEvent);
+router.delete('/saved-events/unsave', authenticateJwt, unsaveEvent);
+router.get('/saved-events/getallsavedevents', authenticateJwt, getAllSavedEvents);
+
+router.get('/getFavouritesByUser', authenticateJwt, getFavouritesByUser);
+
+router.get('/getcomment/:eventId', authenticateJwt, getComments);
+router.post('/postcomment', authenticateJwt, postComment);
+
+export default router;
